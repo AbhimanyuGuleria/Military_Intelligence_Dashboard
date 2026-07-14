@@ -1,0 +1,43 @@
+# ── Data files (too large for GitHub) ──────────────────────────
+*.csv
+*.parquet
+
+# ── Trained model files (large binary blobs) ──────────────────
+models/*.pkl
+# Keep the training script but not the output
+!train_attack_model.py
+
+# ── Python cache ───────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+
+# ── Virtual environments ───────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── OS / editor artifacts ──────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/settings.json
+
+# ── Streamlit secrets / config ─────────────────────────────────
+.streamlit/secrets.toml
+
+# ── Logs ───────────────────────────────────────────────────────
+*.log
+nohup.out
+
+# ── Scratch / temp ─────────────────────────────────────────────
+scratch/
