@@ -116,8 +116,8 @@ print("Training Model...")
 
 model = RandomForestClassifier(
 
-    n_estimators=50,
-    max_depth=15,
+    n_estimators=30,
+    max_depth=12,
     min_samples_split=5,
     random_state=42,
     n_jobs=-1

@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "provider": "GDELT 2.1 DOC API (Fallback Cache)",
+    "retrieved_at": "2026-07-14T12:00:00Z",
+    "window_days": 7,
+    "query": "(\"terrorist attack\" OR bombing OR \"suicide attack\")",
+    "count": 5
+  },
+  "articles": [
+    {
+      "seen_date": "20260714T103000Z",
+      "title": "Security forces neutralize insurgent hideout in Mindanao raid",
+      "source": "inquirer.net",
+      "source_country": "Philippines",
+      "url": "https://www.inquirer.net/security-mindanao-raid",
+      "language": "English"
+    },
+    {
+      "seen_date": "20260714T091500Z",
+      "title": "Suicide bomber targets checkpoint near government complex in Mogadishu",
+      "source": "garoweonline.com",
+      "source_country": "Somalia",
+      "url": "https://www.garoweonline.com/mogadishu-checkpoint-attack",
+      "language": "English"
+    },
+    {
+      "seen_date": "20260714T080000Z",
+      "title": "Low-intensity explosive device defused at train station in Yala",
+      "source": "bangkokpost.com",
+      "source_country": "Thailand",
+      "url": "https://www.bangkokpost.com/yala-explosive-defused",
+      "language": "English"
+    },
+    {
+      "seen_date": "20260713T220000Z",
+      "title": "Militant ambush claims lives of three soldiers in border patrol region",
+      "source": "thehindu.com",
+      "source_country": "India",
+      "url": "https://www.thehindu.com/border-patrol-ambush",
+      "language": "English"
+    },
+    {
+      "seen_date": "20260713T174500Z",
+      "title": "Bomb threat prompts evacuation of public library in central Athens",
+      "source": "kathimerini.gr",
+      "source_country": "Greece",
+      "url": "https://www.kathimerini.gr/athens-bomb-threat",
+      "language": "Greek"
+    }
+  ]
+}

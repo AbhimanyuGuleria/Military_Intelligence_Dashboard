@@ -5,7 +5,7 @@
 !data/gtd_latest.parquet
 
 # ── Trained model files (large binary blobs) ──────────────────
-models/*.pkl
+!models/*.pkl
 # Keep the training script but not the output
 !train_attack_model.py
 
