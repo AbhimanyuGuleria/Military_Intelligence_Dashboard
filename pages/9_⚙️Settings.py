@@ -12,16 +12,18 @@ apply_theme()
 
 def main() -> None:
     hero("Data administration", "Settings & data health", "Update the licensed historical release, inspect data coverage, and configure the live-refresh workflow.")
+    has_status = False
     try:
         status = historical_status()
+        has_status = True
         col1, col2, col3, col4 = st.columns(4)
         col1.metric("Historical records", f"{status['records']:,}")
         col2.metric("Coverage", f"{status['first_year']}–{status['last_year']}")
         col3.metric("Active file", status['path'].name)
         col4.metric("File modified (UTC)", status['updated'].strftime("%Y-%m-%d"))
     except Exception as error:
-        st.error(f"Unable to inspect historical data: {error}")
-        return
+        st.warning("No historical GTD dataset found. Use the uploader below to initialize the dashboard with your licensed GTD data release (.csv or .xlsx).")
+
 
     st.subheader("Historical GTD release")
     st.info("The official GTD provider's current public release covers 1970–2020. Download it directly from START after accepting its license, then upload it here. The dashboard will never download or redistribute licensed GTD data on your behalf.")

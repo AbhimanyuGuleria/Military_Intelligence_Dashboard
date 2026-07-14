@@ -26,6 +26,7 @@ HISTORICAL_CANDIDATES = (
     "globalterrorism_2020.xlsx",
     "globalterrorism_2020.csv",
     "globalterrorismdb_0718dist.csv",
+    "gtd_sample.csv",
 )
 
 

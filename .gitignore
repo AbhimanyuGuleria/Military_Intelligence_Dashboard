@@ -1,6 +1,7 @@
 # ── Data files (too large for GitHub) ──────────────────────────
 *.csv
 *.parquet
+!data/gtd_sample.csv
 
 # ── Trained model files (large binary blobs) ──────────────────
 models/*.pkl
