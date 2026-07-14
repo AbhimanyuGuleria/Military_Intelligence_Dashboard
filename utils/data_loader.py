@@ -42,7 +42,7 @@ def get_historical_data_path() -> Path:
         path
         for directory in (DATA_DIR, LEGACY_DATA_DIR)
         for path in directory.glob("gtd_latest.*")
-        if path.suffix.lower() in {".csv", ".xls", ".xlsx"}
+        if path.suffix.lower() in {".csv", ".xls", ".xlsx", ".parquet"}
     ]
     if uploaded_releases:
         return max(uploaded_releases, key=lambda path: path.stat().st_mtime)

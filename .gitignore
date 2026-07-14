@@ -2,6 +2,7 @@
 *.csv
 *.parquet
 !data/gtd_sample.csv
+!data/gtd_latest.parquet
 
 # ── Trained model files (large binary blobs) ──────────────────
 models/*.pkl
