@@ -9,65 +9,363 @@ import streamlit as st
 
 
 COLORS = {
-    "teal": "#62D6C7",
-    "blue": "#4C8BF5",
-    "indigo": "#8B5CF6",
-    "crimson": "#EF4444",
-    "amber": "#F5B942",
-    "text": "#F1F5F9",
-    "muted": "#94A3B8",
-    "grid": "#263247",
+    "primary": "#7BD9FF",
+    "secondary": "#E9C349",
+    "critical": "#FF2B2B",
+    "warning": "#FFA500",
+    "safe": "#09AB3B",
+    "text": "#DDE3E7",
+    "muted": "#BCC8D0",
+    "grid": "#3D494E",
+    # Legacy mappings to prevent KeyErrors
+    "teal": "#7BD9FF",
+    "blue": "#7BD9FF",
+    "indigo": "#E9C349",
+    "crimson": "#FF2B2B",
+    "amber": "#FFA500",
 }
 
 
 def apply_theme() -> None:
-    """Inject the shared dark SaaS visual system into a Streamlit page."""
+    """Inject the Aegis Command visual system into a Streamlit page."""
     st.markdown(
         """
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap');
 
-        :root { --bg:#0B0F19; --panel:rgba(21,30,46,.82); --line:rgba(255,255,255,.08); --text:#F1F5F9; --muted:#94A3B8; --teal:#62D6C7; --blue:#4C8BF5; --indigo:#8B5CF6; --red:#EF4444; }
-        .stApp { background: radial-gradient(circle at 8% -10%, rgba(76,139,245,.18), transparent 28rem), radial-gradient(circle at 92% 0%, rgba(98,214,199,.11), transparent 26rem), var(--bg); color:var(--text); font-family:Inter, sans-serif; }
-        .block-container { max-width: 1450px; padding-top: 2.35rem; padding-bottom: 3rem; }
-        [data-testid="stHeader"] { background:rgba(11,15,25,.72); border-bottom:1px solid rgba(255,255,255,.04); backdrop-filter:blur(16px); }
-        [data-testid="stToolbar"] { right:1rem; }
-        [data-testid="stSidebar"] { background:linear-gradient(180deg,#111927 0%,#0d1421 100%); border-right:1px solid var(--line); }
-        [data-testid="stSidebar"] > div:first-child { padding-top:1.4rem; }
-        [data-testid="stSidebar"] .stMarkdown h1, [data-testid="stSidebar"] .stMarkdown h2, [data-testid="stSidebar"] .stMarkdown h3 { margin-top: .75rem; }
-        h1,h2,h3 { color:var(--text) !important; font-family:Outfit,Inter,sans-serif; letter-spacing:-.025em; }
-        h1 { font-size:2.2rem !important; } h2 { font-size:1.4rem !important; margin-top:1.7rem !important; }
-        p,li,[data-testid="stCaptionContainer"] { color:var(--muted); line-height:1.6; }
-        div[data-testid="stMetric"] { min-height:112px; padding:1rem 1.05rem; background:linear-gradient(145deg,rgba(29,42,64,.88),rgba(16,24,39,.86)); border:1px solid var(--line); border-radius:15px; box-shadow:0 10px 28px rgba(0,0,0,.18); transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease; }
-        div[data-testid="stMetric"]:hover { transform:translateY(-3px); border-color:rgba(98,214,199,.4); box-shadow:0 16px 34px rgba(0,0,0,.25); }
-        div[data-testid="stMetricLabel"] { color:var(--muted); font-size:.75rem; letter-spacing:.07em; text-transform:uppercase; }
-        div[data-testid="stMetricValue"] { color:var(--text); font-family:Outfit,Inter,sans-serif; font-size:1.45rem; }
-        div[data-testid="stMetricDelta"] svg { fill:var(--teal); }
-        .stButton > button, .stDownloadButton > button, [data-testid="stBaseButton-primary"] { border:1px solid rgba(98,214,199,.38); border-radius:10px; background:linear-gradient(135deg,#176d6b,#267eaa); color:#f8ffff; font-weight:600; transition:all .18s ease; }
-        .stButton > button:hover, .stDownloadButton > button:hover { transform:translateY(-2px); border-color:var(--teal); box-shadow:0 10px 22px rgba(38,126,170,.25); color:white; }
-        .stButton > button[kind="secondary"] { background:#182438; border-color:var(--line); }
-        [data-baseweb="select"] > div, [data-baseweb="input"] > div, [data-baseweb="base-input"] { background:#121c2d !important; border-color:rgba(148,163,184,.25) !important; border-radius:9px !important; color:var(--text) !important; }
-        [data-baseweb="select"] > div:hover, [data-baseweb="input"] > div:focus-within { border-color:var(--teal) !important; box-shadow:0 0 0 1px rgba(98,214,199,.28) !important; }
-        [data-testid="stFileUploader"] { background:rgba(21,30,46,.7); border:1px dashed rgba(98,214,199,.35); padding:.7rem; border-radius:13px; }
-        [data-testid="stForm"] { background:rgba(21,30,46,.72); padding:1.35rem; border:1px solid var(--line); border-radius:16px; }
-        [data-baseweb="tab-list"] { gap:.45rem; border-bottom:1px solid var(--line); }
-        button[data-baseweb="tab"] { color:var(--muted); font-weight:600; padding:.65rem .85rem; }
-        button[data-baseweb="tab"][aria-selected="true"] { color:var(--teal); border-bottom-color:var(--teal) !important; }
-        [data-testid="stAlert"] { border-radius:12px; border:1px solid var(--line); background:rgba(21,30,46,.84); }
-        [data-testid="stDataFrame"] { border:1px solid var(--line); border-radius:14px; overflow:hidden; }
-        [data-testid="stVerticalBlockBorderWrapper"] { border-color:var(--line); border-radius:14px; }
-        hr { border-color:var(--line); margin:1.8rem 0; }
-        ::-webkit-scrollbar { width:10px; height:10px; } ::-webkit-scrollbar-track { background:#0b0f19; } ::-webkit-scrollbar-thumb { background:#2b3b55; border-radius:10px; } ::-webkit-scrollbar-thumb:hover { background:#62d6c7; }
-        .intel-kicker { display:inline-flex; align-items:center; gap:.4rem; color:var(--teal); background:rgba(98,214,199,.09); border:1px solid rgba(98,214,199,.2); border-radius:999px; padding:.28rem .6rem; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
-        .intel-kicker:before { content:''; width:.38rem; height:.38rem; background:var(--teal); border-radius:50%; box-shadow:0 0 12px var(--teal); }
-        .intel-hero { position:relative; overflow:hidden; padding:1.75rem 1.9rem; border-radius:20px; background:linear-gradient(120deg,rgba(25,43,68,.9),rgba(23,30,55,.78)); border:1px solid rgba(255,255,255,.1); box-shadow:0 18px 45px rgba(0,0,0,.2); margin-bottom:1.4rem; animation:intel-rise .45s ease-out both; }
-        .intel-hero:after { content:''; position:absolute; width:22rem; height:22rem; right:-9rem; top:-15rem; border-radius:50%; background:radial-gradient(circle,rgba(98,214,199,.23),transparent 65%); pointer-events:none; }
-        .intel-hero h1 { margin:.75rem 0 .45rem !important; max-width:800px; } .intel-hero-copy { max-width:780px; color:#bcc9d9; line-height:1.6; }
-        .intel-section { padding:1.1rem 1.2rem; margin:.7rem 0 1.1rem; background:rgba(21,30,46,.56); border:1px solid var(--line); border-radius:15px; }
-        @keyframes intel-rise { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        :root {
+            --bg: #0E1417;
+            --panel: rgba(28, 31, 38, 0.7);
+            --line: rgba(134, 147, 153, 0.1);
+            --outline-variant: #3D494E;
+            --text: #DDE3E7;
+            --muted: #BCC8D0;
+            --primary: #7BD9FF;
+            --on-primary: #003545;
+            --secondary: #E9C349;
+            --red: #FF2B2B;
+            --green: #09AB3B;
+            --amber: #FFA500;
+        }
+
+        /* Tactical Grid Background */
+        .stApp {
+            background-color: var(--bg);
+            background-image: radial-gradient(rgba(123, 217, 255, 0.035) 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: var(--text);
+            font-family: Inter, sans-serif;
+        }
+
+        .block-container {
+            max-width: 1450px;
+            padding-top: 2.35rem;
+            padding-bottom: 3rem;
+        }
+
+        /* Glassmorphism Header */
+        [data-testid="stHeader"] {
+            background: rgba(14, 20, 23, 0.75);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(20px);
+        }
+
+        [data-testid="stToolbar"] {
+            right: 1rem;
+        }
+
+        /* Sidebar Styling */
+        [data-testid="stSidebar"] {
+            background: #111619;
+            border-right: 1px solid var(--line);
+        }
+
+        [data-testid="stSidebar"] > div:first-child {
+            padding-top: 1.4rem;
+        }
+
+        [data-testid="stSidebar"] .stMarkdown h1,
+        [data-testid="stSidebar"] .stMarkdown h2,
+        [data-testid="stSidebar"] .stMarkdown h3 {
+            margin-top: .75rem;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            color: var(--text) !important;
+            font-family: 'Hanken Grotesk', Inter, sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.2rem !important;
+            font-weight: 700 !important;
+        }
+
+        h2 {
+            font-size: 1.4rem !important;
+            font-weight: 600 !important;
+            margin-top: 1.7rem !important;
+        }
+
+        p, li, [data-testid="stCaptionContainer"] {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* Tactical HUD Metrics */
+        div[data-testid="stMetric"] {
+            min-height: 112px;
+            padding: 1rem 1.05rem;
+            background: var(--panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--line);
+            border-radius: 4px !important;
+            transition: border-color .18s ease;
+        }
+
+        div[data-testid="stMetric"]:hover {
+            border-color: rgba(123, 217, 255, 0.4);
+        }
+
+        div[data-testid="stMetricLabel"] {
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        div[data-testid="stMetricValue"] {
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.45rem;
+            font-weight: 600;
+        }
+
+        div[data-testid="stMetricDelta"] svg {
+            fill: var(--primary);
+        }
+
+        /* Soft-Geometric Buttons */
+        .stButton > button, .stDownloadButton > button, [data-testid="stBaseButton-primary"] {
+            border-radius: 4px !important;
+            font-weight: 600;
+            transition: all 0.18s ease;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Primary Button */
+        [data-testid="stBaseButton-primary"],
+        .stButton > button[kind="primary"] {
+            background-color: var(--primary) !important;
+            color: var(--on-primary) !important;
+            border: 1px solid var(--primary) !important;
+        }
+
+        [data-testid="stBaseButton-primary"]:hover,
+        .stButton > button[kind="primary"]:hover {
+            opacity: 0.9;
+        }
+
+        /* Secondary/Ghost Button */
+        .stButton > button[kind="secondary"],
+        .stDownloadButton > button {
+            background-color: transparent !important;
+            color: var(--text) !important;
+            border: 1px solid var(--line) !important;
+        }
+
+        .stButton > button[kind="secondary"]:hover,
+        .stDownloadButton > button:hover {
+            border-color: var(--primary) !important;
+            color: var(--primary) !important;
+        }
+
+        /* Inputs & Dropdowns */
+        [data-baseweb="select"] > div,
+        [data-baseweb="input"] > div,
+        [data-baseweb="base-input"] {
+            background-color: #12181b !important;
+            border: 1px solid var(--outline-variant) !important;
+            border-radius: 4px !important;
+            color: var(--text) !important;
+        }
+
+        [data-baseweb="select"] > div:hover,
+        [data-baseweb="input"] > div:focus-within {
+            border-color: var(--primary) !important;
+        }
+
+        /* Form Container */
+        [data-testid="stForm"] {
+            background-color: rgba(22, 28, 31, 0.6);
+            padding: 1.35rem;
+            border: 1px solid var(--line);
+            border-radius: 4px !important;
+        }
+
+        /* File Uploader */
+        [data-testid="stFileUploader"] {
+            background: rgba(22, 28, 31, 0.4);
+            border: 1px dashed rgba(123, 217, 255, 0.25);
+            padding: 0.7rem;
+            border-radius: 4px !important;
+        }
+
+        /* Tabs */
+        [data-baseweb="tab-list"] {
+            gap: 0.45rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        button[data-baseweb="tab"] {
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.65rem 0.85rem;
+            text-transform: uppercase;
+        }
+
+        button[data-baseweb="tab"][aria-selected="true"] {
+            color: var(--primary);
+            border-bottom-color: var(--primary) !important;
+        }
+
+        /* Tables & DataFrames */
+        [data-testid="stDataFrame"] {
+            border: 1px solid var(--line);
+            border-radius: 4px !important;
+            overflow: hidden;
+        }
+
+        [data-testid="stVerticalBlockBorderWrapper"] {
+            border-color: var(--line);
+            border-radius: 4px !important;
+        }
+
+        /* Alerts & Status Boxes */
+        [data-testid="stAlert"] {
+            border-radius: 4px !important;
+            border: 1px solid var(--line);
+            background-color: rgba(22, 28, 31, 0.8);
+        }
+
+        hr {
+            border-color: var(--line);
+            margin: 1.8rem 0;
+        }
+
+        /* Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--outline-variant);
+            border-radius: 2px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Aegis Kicker Status Pip */
+        .intel-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--primary);
+            background: rgba(123, 217, 255, 0.08);
+            border: 1px solid rgba(123, 217, 255, 0.2);
+            border-radius: 4px;
+            padding: 0.28rem 0.6rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .intel-kicker:before {
+            content: '';
+            width: 0.38rem;
+            height: 0.38rem;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--primary);
+        }
+
+        /* Command Center Banner */
+        .intel-hero {
+            position: relative;
+            overflow: hidden;
+            padding: 1.75rem 1.9rem;
+            border-radius: 4px;
+            background: linear-gradient(135deg, rgba(22, 28, 31, 0.85) 0%, rgba(14, 20, 23, 0.75) 100%);
+            border: 1px solid var(--line);
+            margin-bottom: 1.4rem;
+            animation: intel-rise 0.45s ease-out both;
+        }
+
+        .intel-hero:after {
+            content: '';
+            position: absolute;
+            width: 22rem;
+            height: 22rem;
+            right: -9rem;
+            top: -15rem;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(123, 217, 255, 0.18), transparent 65%);
+            pointer-events: none;
+        }
+
+        .intel-hero h1 {
+            margin: 0.75rem 0 0.45rem !important;
+            max-width: 800px;
+        }
+
+        .intel-hero-copy {
+            max-width: 780px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .intel-section {
+            padding: 1.1rem 1.2rem;
+            margin: 0.7rem 0 1.1rem;
+            background: rgba(22, 28, 31, 0.5);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+        }
+
+        @keyframes intel-rise {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         </style>
         """,
         unsafe_allow_html=True,
+    )
+
+    # Render tactical sidebar header
+    st.sidebar.markdown(
+        '<div class="sidebar-header" style="padding: 0.8rem 0; border-bottom: 1px solid rgba(134, 147, 153, 0.1); margin-bottom: 1.5rem; text-align: center;">'
+        '<div class="intel-kicker" style="font-size: 0.6rem; padding: 0.15rem 0.45rem;">SYSTEM SECURE</div>'
+        '<h3 style="margin: 0.6rem 0 0; font-size: 1.3rem; font-weight: 700; color: #7BD9FF !important; font-family: \'Hanken Grotesk\', sans-serif; letter-spacing: -0.03em;">SIGNALWATCH</h3>'
+        '<p style="margin: 0.1rem 0 0; font-size: 0.6rem; font-family: \'JetBrains Mono\', monospace; color: #BCC8D0; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8;">Unit: SW-1</p>'
+        '</div>',
+        unsafe_allow_html=True
     )
 
 
@@ -79,8 +377,20 @@ def hero(kicker: str, title: str, description: str) -> None:
 
 
 def chart_style(chart: alt.Chart) -> alt.Chart:
-    """Apply readable dark-mode defaults to an Altair chart without altering data."""
-    return chart.configure_view(strokeOpacity=0).configure_axis(
-        domain=False, gridColor=COLORS["grid"], gridOpacity=0.65,
-        labelColor=COLORS["muted"], titleColor=COLORS["muted"],
-    ).configure_legend(labelColor=COLORS["muted"], titleColor=COLORS["text"])
+    """Apply readable dark-mode defaults to an Altair chart matching Aegis Command System."""
+    return chart.configure_view(
+        strokeOpacity=0
+    ).configure_axis(
+        domain=False,
+        gridColor=COLORS["grid"],
+        gridOpacity=0.4,
+        labelColor=COLORS["muted"],
+        titleColor=COLORS["muted"],
+        labelFont="Inter, sans-serif",
+        titleFont="Inter, sans-serif",
+    ).configure_legend(
+        labelColor=COLORS["muted"],
+        titleColor=COLORS["text"],
+        labelFont="Inter, sans-serif",
+        titleFont="Inter, sans-serif",
+    )

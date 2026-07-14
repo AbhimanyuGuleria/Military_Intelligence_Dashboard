@@ -4,7 +4,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 from utils.data_loader import attach_display_summaries, read_historical_data, valid_date_part
-from utils.ui import apply_theme, hero
+from utils.ui import COLORS, apply_theme, chart_style, hero
 
 
 st.set_page_config(page_title="Military Intelligence Dashboard - Data Explorer", page_icon="📊", layout="wide")
@@ -211,7 +211,7 @@ def main():
         country_counts.columns = ["Country", "Incidents"]
         country_chart = (
             alt.Chart(country_counts)
-            .mark_bar(color="#2E86AB")
+            .mark_bar(color=COLORS["primary"])
             .encode(
                 x=alt.X("Incidents:Q", title="Incidents"),
                 y=alt.Y("Country:N", sort="-x", title="Country"),
@@ -219,7 +219,7 @@ def main():
             )
             .properties(height=340)
         )
-        st.altair_chart(country_chart, use_container_width=True)
+        st.altair_chart(chart_style(country_chart), use_container_width=True)
 
     with tabs[2]:
         st.subheader("Attack Type Distribution")
@@ -227,7 +227,7 @@ def main():
         attack_counts.columns = ["Attack Type", "Incidents"]
         attack_chart = (
             alt.Chart(attack_counts)
-            .mark_bar(color="#D1495B")
+            .mark_bar(color=COLORS["critical"])
             .encode(
                 x=alt.X("Incidents:Q", title="Incidents"),
                 y=alt.Y("Attack Type:N", sort="-x", title="Attack Type"),
@@ -235,7 +235,7 @@ def main():
             )
             .properties(height=340)
         )
-        st.altair_chart(attack_chart, use_container_width=True)
+        st.altair_chart(chart_style(attack_chart), use_container_width=True)
 
     with tabs[3]:
         st.subheader("Weapon Type Distribution")
@@ -243,7 +243,7 @@ def main():
         weapon_counts.columns = ["Weapon", "Incidents"]
         weapon_chart = (
             alt.Chart(weapon_counts)
-            .mark_bar(color="#7A5195")
+            .mark_bar(color=COLORS["secondary"])
             .encode(
                 x=alt.X("Incidents:Q", title="Incidents"),
                 y=alt.Y("Weapon:N", sort="-x", title="Weapon"),
@@ -251,7 +251,7 @@ def main():
             )
             .properties(height=340)
         )
-        st.altair_chart(weapon_chart, use_container_width=True)
+        st.altair_chart(chart_style(weapon_chart), use_container_width=True)
 
     with tabs[4]:
         st.subheader("Dataset Diagnostics")

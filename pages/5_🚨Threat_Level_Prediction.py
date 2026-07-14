@@ -9,7 +9,7 @@ from utils.data_loader import attach_display_summaries, read_historical_data, va
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-from utils.ui import apply_theme, hero
+from utils.ui import COLORS, apply_theme, chart_style, hero
 
 
 st.set_page_config(page_title="Military Intelligence Dashboard - Threat Level Prediction", page_icon="🚨", layout="wide")
@@ -353,7 +353,7 @@ def main():
             similar_years = similar_years.rename(columns={"iyear": "Year"})
             chart = (
                 alt.Chart(similar_years)
-                .mark_line(point=True)
+                .mark_line(point=True, color=COLORS["primary"])
                 .encode(
                     x=alt.X("Year:Q", title="Year"),
                     y=alt.Y("Incidents:Q", title="Incidents"),
@@ -361,7 +361,7 @@ def main():
                 )
                 .properties(height=280)
             )
-            st.altair_chart(chart, use_container_width=True)
+            st.altair_chart(chart_style(chart), use_container_width=True)
         else:
             st.info("No directly matching historical cases were found for this exact scenario.")
 
@@ -375,12 +375,12 @@ def main():
             .encode(
                 x=alt.X("Threat Level:N", title="Threat Level"),
                 y=alt.Y("Cases:Q", title="Cases"),
-                color=alt.Color("Threat Level:N", legend=None),
+                color=alt.Color("Threat Level:N", scale=alt.Scale(domain=["LOW", "MEDIUM", "HIGH"], range=[COLORS["safe"], COLORS["warning"], COLORS["critical"]]), legend=None),
                 tooltip=["Threat Level:N", "Cases:Q"],
             )
             .properties(height=280)
         )
-        st.altair_chart(threat_chart, use_container_width=True)
+        st.altair_chart(chart_style(threat_chart), use_container_width=True)
 
         st.subheader("Risk Notes")
         st.write(

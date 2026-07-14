@@ -4,7 +4,8 @@ import joblib
 import pandas as pd
 import streamlit as st
 from utils.data_loader import get_historical_data_path, read_historical_data
-from utils.ui import apply_theme, hero
+import altair as alt
+from utils.ui import COLORS, apply_theme, chart_style, hero
 
 
 st.set_page_config(page_title="Military Intelligence Dashboard - Attack Prediction", page_icon="🤖", layout="wide")
@@ -257,14 +258,23 @@ def main():
             st.metric("Prediction Confidence", f"{prediction_probabilities.max() * 100:.2f}%")
 
             st.subheader("Top Prediction Alternatives")
-            st.bar_chart(
-                pd.DataFrame(
-                    {
-                        "Attack Type": [item["attack"] for item in top_predictions],
-                        "Probability": [item["probability"] for item in top_predictions],
-                    }
-                ).set_index("Attack Type")
+            chart_df = pd.DataFrame(
+                {
+                    "Attack Type": [item["attack"] for item in top_predictions],
+                    "Probability": [item["probability"] for item in top_predictions],
+                }
             )
+            chart = (
+                alt.Chart(chart_df)
+                .mark_bar(color=COLORS["primary"])
+                .encode(
+                    x=alt.X("Probability:Q", title="Probability"),
+                    y=alt.Y("Attack Type:N", sort="-x", title="Attack Type"),
+                    tooltip=["Attack Type", "Probability"],
+                )
+                .properties(height=240)
+            )
+            st.altair_chart(chart_style(chart), use_container_width=True)
 
         with result_col2:
             st.subheader("Scenario Intelligence")

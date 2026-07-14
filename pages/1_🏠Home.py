@@ -44,7 +44,7 @@ def main() -> None:
     left, right = st.columns([2, 1])
     with left:
         st.subheader("Historical incident trend")
-        chart = alt.Chart(yearly).mark_area(line={"color": COLORS["teal"]}, color="#1d8c8a55").encode(
+        chart = alt.Chart(yearly).mark_area(line={"color": COLORS["teal"]}, color="#7BD9FF25").encode(
             x=alt.X("Year:Q", title=None), y=alt.Y("Incidents:Q", title="Recorded incidents"),
             tooltip=[alt.Tooltip("Year:Q", format=".0f"), alt.Tooltip("Incidents:Q", format=",")],
         ).properties(height=340)

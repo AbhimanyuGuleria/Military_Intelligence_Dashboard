@@ -4,7 +4,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 from utils.data_loader import attach_display_summaries, read_historical_data, valid_date_part
-from utils.ui import apply_theme, hero
+from utils.ui import COLORS, apply_theme, chart_style, hero
 
 
 st.set_page_config(page_title="Military Intelligence Dashboard - AI Intelligence Report", page_icon="🧠", layout="wide")
@@ -194,7 +194,7 @@ def main():
         country_counts.columns = ["Country", "Incidents"]
         country_chart = (
             alt.Chart(country_counts)
-            .mark_bar(color="#2E86AB")
+            .mark_bar(color=COLORS["primary"])
             .encode(
                 x=alt.X("Incidents:Q", title="Incidents"),
                 y=alt.Y("Country:N", sort="-x", title="Country"),
@@ -202,7 +202,7 @@ def main():
             )
             .properties(height=320)
         )
-        st.altair_chart(country_chart, use_container_width=True)
+        st.altair_chart(chart_style(country_chart), use_container_width=True)
 
     with chart_col2:
         st.subheader("Top Terrorist Groups")
@@ -210,7 +210,7 @@ def main():
         group_counts.columns = ["Group", "Incidents"]
         group_chart = (
             alt.Chart(group_counts)
-            .mark_bar(color="#7A5195")
+            .mark_bar(color=COLORS["secondary"])
             .encode(
                 x=alt.X("Incidents:Q", title="Incidents"),
                 y=alt.Y("Group:N", sort="-x", title="Group"),
@@ -218,7 +218,7 @@ def main():
             )
             .properties(height=320)
         )
-        st.altair_chart(group_chart, use_container_width=True)
+        st.altair_chart(chart_style(group_chart), use_container_width=True)
 
     detail_tabs = st.tabs(["Attack Types", "Weapons", "Targets", "Risk Bands"])
 
@@ -227,7 +227,7 @@ def main():
         attack_counts.columns = ["Attack Type", "Incidents"]
         attack_chart = (
             alt.Chart(attack_counts)
-            .mark_bar(color="#D1495B")
+            .mark_bar(color=COLORS["critical"])
             .encode(
                 x=alt.X("Incidents:Q", title="Incidents"),
                 y=alt.Y("Attack Type:N", sort="-x", title="Attack Type"),
@@ -235,14 +235,14 @@ def main():
             )
             .properties(height=300)
         )
-        st.altair_chart(attack_chart, use_container_width=True)
+        st.altair_chart(chart_style(attack_chart), use_container_width=True)
 
     with detail_tabs[1]:
         weapon_counts = filtered_df["weaptype1_txt"].value_counts().head(10).reset_index()
         weapon_counts.columns = ["Weapon", "Incidents"]
         weapon_chart = (
             alt.Chart(weapon_counts)
-            .mark_bar(color="#F28E2B")
+            .mark_bar(color=COLORS["secondary"])
             .encode(
                 x=alt.X("Incidents:Q", title="Incidents"),
                 y=alt.Y("Weapon:N", sort="-x", title="Weapon"),
@@ -250,14 +250,14 @@ def main():
             )
             .properties(height=300)
         )
-        st.altair_chart(weapon_chart, use_container_width=True)
+        st.altair_chart(chart_style(weapon_chart), use_container_width=True)
 
     with detail_tabs[2]:
         target_counts = filtered_df["targtype1_txt"].value_counts().head(10).reset_index()
         target_counts.columns = ["Target", "Incidents"]
         target_chart = (
             alt.Chart(target_counts)
-            .mark_bar(color="#2E86AB")
+            .mark_bar(color=COLORS["primary"])
             .encode(
                 x=alt.X("Incidents:Q", title="Incidents"),
                 y=alt.Y("Target:N", sort="-x", title="Target"),
@@ -265,7 +265,7 @@ def main():
             )
             .properties(height=300)
         )
-        st.altair_chart(target_chart, use_container_width=True)
+        st.altair_chart(chart_style(target_chart), use_container_width=True)
 
     with detail_tabs[3]:
         band_counts = filtered_df["threat_band"].value_counts().reset_index()
@@ -276,12 +276,12 @@ def main():
             .encode(
                 x=alt.X("Threat Band:N", title="Threat Band"),
                 y=alt.Y("Cases:Q", title="Cases"),
-                color=alt.Color("Threat Band:N", legend=None),
+                color=alt.Color("Threat Band:N", scale=alt.Scale(domain=["Low", "Medium", "High"], range=[COLORS["safe"], COLORS["warning"], COLORS["critical"]]), legend=None),
                 tooltip=["Threat Band:N", "Cases:Q"],
             )
             .properties(height=300)
         )
-        st.altair_chart(band_chart, use_container_width=True)
+        st.altair_chart(chart_style(band_chart), use_container_width=True)
 
     st.markdown("---")
 

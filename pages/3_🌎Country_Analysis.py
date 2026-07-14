@@ -4,7 +4,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 from utils.data_loader import attach_display_summaries, read_historical_data, valid_date_part
-from utils.ui import apply_theme, hero
+from utils.ui import COLORS, apply_theme, chart_style, hero
 
 
 st.set_page_config(page_title="Military Intelligence Dashboard - Country Analysis", layout="wide")
@@ -163,7 +163,7 @@ def main():
 				group_counts.columns = ["Terrorist Group", "Incidents"]
 				group_chart = (
 					alt.Chart(group_counts)
-					.mark_bar(color="#7A5195")
+					.mark_bar(color=COLORS["primary"])
 					.encode(
 						x=alt.X("Incidents:Q", title="Incidents"),
 						y=alt.Y("Terrorist Group:N", sort="-x", title="Terrorist Group"),
@@ -171,7 +171,7 @@ def main():
 					)
 					.properties(height=320)
 				)
-				st.altair_chart(group_chart, use_container_width=True)
+				st.altair_chart(chart_style(group_chart), use_container_width=True)
 			else:
 				st.info("No terrorist-group data available for this selection.")
 
@@ -181,7 +181,7 @@ def main():
 				weapon_counts.columns = ["Weapon", "Incidents"]
 				weapon_chart = (
 					alt.Chart(weapon_counts)
-					.mark_bar(color="#F28E2B")
+					.mark_bar(color=COLORS["secondary"])
 					.encode(
 						x=alt.X("Incidents:Q", title="Incidents"),
 						y=alt.Y("Weapon:N", sort="-x", title="Weapon"),
@@ -189,7 +189,7 @@ def main():
 					)
 					.properties(height=320)
 				)
-				st.altair_chart(weapon_chart, use_container_width=True)
+				st.altair_chart(chart_style(weapon_chart), use_container_width=True)
 			else:
 				st.info("No weapon data available for this selection.")
 
@@ -199,7 +199,7 @@ def main():
 				target_counts.columns = ["Target", "Incidents"]
 				target_chart = (
 					alt.Chart(target_counts)
-					.mark_bar(color="#2E86AB")
+					.mark_bar(color=COLORS["primary"])
 					.encode(
 						x=alt.X("Incidents:Q", title="Incidents"),
 						y=alt.Y("Target:N", sort="-x", title="Target"),
@@ -207,7 +207,7 @@ def main():
 					)
 					.properties(height=320)
 				)
-				st.altair_chart(target_chart, use_container_width=True)
+				st.altair_chart(chart_style(target_chart), use_container_width=True)
 			else:
 				st.info("No target data available for this selection.")
 
@@ -217,7 +217,7 @@ def main():
 				attack_counts.columns = ["Attack Type", "Incidents"]
 				attack_chart = (
 					alt.Chart(attack_counts)
-					.mark_bar(color="#D1495B")
+					.mark_bar(color=COLORS["critical"])
 					.encode(
 						x=alt.X("Incidents:Q", title="Incidents"),
 						y=alt.Y("Attack Type:N", sort="-x", title="Attack Type"),
@@ -225,7 +225,7 @@ def main():
 					)
 					.properties(height=320)
 				)
-				st.altair_chart(attack_chart, use_container_width=True)
+				st.altair_chart(chart_style(attack_chart), use_container_width=True)
 			else:
 				st.info("No attack-type data available for this selection.")
 
@@ -247,7 +247,7 @@ def main():
 
 			yearly_chart = (
 				alt.Chart(yearly_counts)
-				.mark_line(point=True)
+				.mark_line(point=True, color=COLORS["primary"])
 				.encode(
 					x=alt.X("Year:Q", title="Year"),
 					y=alt.Y("Incidents:Q", title="Incidents"),
@@ -255,7 +255,7 @@ def main():
 				)
 				.properties(height=340)
 			)
-			st.altair_chart(yearly_chart, use_container_width=True)
+			st.altair_chart(chart_style(yearly_chart), use_container_width=True)
 		else:
 			st.info("Year data is unavailable for the current filters.")
 
@@ -276,7 +276,7 @@ def main():
 
 			country_chart = (
 				alt.Chart(country_rollup)
-				.mark_bar(color="#2E86AB")
+				.mark_bar(color=COLORS["primary"])
 				.encode(
 					x=alt.X("Incidents:Q", title="Incidents"),
 					y=alt.Y("Country:N", sort="-x", title="Country"),
@@ -284,7 +284,7 @@ def main():
 				)
 				.properties(height=260)
 			)
-			st.altair_chart(country_chart, use_container_width=True)
+			st.altair_chart(chart_style(country_chart), use_container_width=True)
 		else:
 			st.info("No country rollup available for the current selection.")
 
@@ -310,7 +310,7 @@ def main():
 
 				focus_attack_chart = (
 					alt.Chart(focus_attack_counts)
-					.mark_bar(color="#D1495B")
+					.mark_bar(color=COLORS["critical"])
 					.encode(
 						x=alt.X("Incidents:Q", title="Incidents"),
 						y=alt.Y("Attack Type:N", sort="-x", title="Attack Type"),
@@ -318,7 +318,7 @@ def main():
 					)
 					.properties(height=280)
 				)
-				st.altair_chart(focus_attack_chart, use_container_width=True)
+				st.altair_chart(chart_style(focus_attack_chart), use_container_width=True)
 			else:
 				st.info("No attack-type data available for the selected country.")
 
@@ -336,7 +336,7 @@ def main():
 
 				focus_yearly_chart = (
 					alt.Chart(focus_yearly_counts)
-					.mark_line(point=True)
+					.mark_line(point=True, color=COLORS["primary"])
 					.encode(
 						x=alt.X("Year:Q", title="Year"),
 						y=alt.Y("Incidents:Q", title="Incidents"),
@@ -344,7 +344,7 @@ def main():
 					)
 					.properties(height=280)
 				)
-				st.altair_chart(focus_yearly_chart, use_container_width=True)
+				st.altair_chart(chart_style(focus_yearly_chart), use_container_width=True)
 			else:
 				st.info("No year data available for the selected country.")
 
@@ -379,7 +379,7 @@ def main():
 
 			attack_chart = (
 				alt.Chart(attack_counts)
-				.mark_bar(color="#D1495B")
+				.mark_bar(color=COLORS["critical"])
 				.encode(
 					x=alt.X("Incidents:Q", title="Incidents"),
 					y=alt.Y("Attack Type:N", sort="-x", title="Attack Type"),
@@ -387,7 +387,7 @@ def main():
 				)
 				.properties(height=300)
 			)
-			st.altair_chart(attack_chart, use_container_width=True)
+			st.altair_chart(chart_style(attack_chart), use_container_width=True)
 		else:
 			st.info("Attack-type data is unavailable for the current filters.")
 
@@ -407,12 +407,12 @@ def main():
 				.encode(
 					x=alt.X("Measure:N", title="Measure"),
 					y=alt.Y("Count:Q", title="Count"),
-					color=alt.Color("Measure:N", scale=alt.Scale(range=["#0B4F6C", "#01BAEF"]), legend=None),
+					color=alt.Color("Measure:N", scale=alt.Scale(range=[COLORS["secondary"], COLORS["primary"]]), legend=None),
 					tooltip=["Measure:N", "Count:Q"],
 				)
 				.properties(height=300)
 			)
-			st.altair_chart(impact_chart, use_container_width=True)
+			st.altair_chart(chart_style(impact_chart), use_container_width=True)
 		else:
 			st.info("No impact data available for the current filters.")
 
