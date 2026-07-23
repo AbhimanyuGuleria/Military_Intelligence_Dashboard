@@ -36,6 +36,10 @@ Designed to run smoothly on systems with severely limited hardware resources (e.
 
 ## 🚀 Getting Started
 
+
+### run on StreamLit
+https://militaryintelligencedashboard.streamlit.app/
+
 ### Prerequisites
 Install all dependencies listed in the requirements file:
 ```bash
